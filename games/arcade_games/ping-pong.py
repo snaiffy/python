@@ -14,36 +14,36 @@ HEIGHT = 300
 # ширина ракетки
 PAD_W = 10
 # высота ракетки
-PAD_H = 100
+PAD_H = 55
  
 # настройки мяча
 # Насколько будет увеличиваться скорость мяча с каждым ударом
-BALL_SPEED_UP = 1.05
+BALL_SPEED_UP = 1.10
 # Максимальная скорость мяча
-BALL_MAX_SPEED = 40
+BALL_MAX_SPEED = 75
 # радиус мяча
-BALL_RADIUS = 30
+BALL_RADIUS = 35
 
 INITIAL_SPEED = 20
 BALL_X_SPEED = INITIAL_SPEED
 BALL_Y_SPEED = INITIAL_SPEED
 
 # Счет игроков
-PLAYER_1_SCORE = 0
-PLAYER_2_SCORE = 0
+RED_SCORE = 0
+BLUE_SCORE = 0
 
 # Добавим глобальную переменную отвечающую за расстояние
 # до правого края игрового поля
 right_line_distance = WIDTH - PAD_W
 
 def update_score(player):
-    global PLAYER_1_SCORE, PLAYER_2_SCORE
+    global RED_SCORE, BLUE_SCORE
     if player == "right":
-        PLAYER_1_SCORE += 1
-        c.itemconfig(p_1_text, text=PLAYER_1_SCORE)
+        RED_SCORE += 1
+        c.itemconfig(red_text, text=RED_SCORE)
     else:
-        PLAYER_2_SCORE += 1
-        c.itemconfig(p_2_text, text=PLAYER_2_SCORE)
+        BLUE_SCORE += 1
+        c.itemconfig(blue_text, text=BLUE_SCORE)
  
 def spawn_ball():
     global BALL_X_SPEED
@@ -61,7 +61,7 @@ def bounce(action):
     global BALL_X_SPEED, BALL_Y_SPEED
     # ударили ракеткой
     if action == "strike":
-        BALL_Y_SPEED = random.randrange(-10, 10)
+        BALL_Y_SPEED = random.randrange(-5, 25)
         if abs(BALL_X_SPEED) < BALL_MAX_SPEED:
             BALL_X_SPEED *= -BALL_SPEED_UP
         else:
@@ -95,20 +95,20 @@ BALL = c.create_oval(WIDTH/2-BALL_RADIUS/2,
                      HEIGHT/2+BALL_RADIUS/2, fill="white")
  
 # левая ракетка
-LEFT_PAD = c.create_line(PAD_W/2, 0, PAD_W/2, PAD_H, width=PAD_W, fill="yellow")
+LEFT_PAD = c.create_line(PAD_W/2, 0, PAD_W/2, PAD_H, width=PAD_W, fill="red")
  
 # правая ракетка
 RIGHT_PAD = c.create_line(WIDTH-PAD_W/2, 0, WIDTH-PAD_W/2, 
-                          PAD_H, width=PAD_W, fill="yellow")
+                          PAD_H, width=PAD_W, fill="blue")
 
 
-p_1_text = c.create_text(WIDTH-WIDTH/6, PAD_H/4,
-                         text=PLAYER_1_SCORE,
+red_text = c.create_text(WIDTH-WIDTH/6, PAD_H/4,
+                         text=RED_SCORE,
                          font="Arial 20",
                          fill="white")
  
-p_2_text = c.create_text(WIDTH/6, PAD_H/4,
-                          text=PLAYER_2_SCORE,
+blue_text = c.create_text(WIDTH/6, PAD_H/4,
+                          text=BLUE_SCORE,
                           font="Arial 20",
                           fill="white")
 
@@ -161,7 +161,7 @@ def move_ball():
 
 # зададим глобальные переменные скорости движения ракеток
 # скорось с которой будут ездить ракетки
-PAD_SPEED = 20
+PAD_SPEED = 15
 # скорость левой платформы
 LEFT_PAD_SPEED = 0
 # скорость правой ракетки
